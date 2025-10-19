@@ -42,7 +42,7 @@ def listar_clientes():
 def leer_cliente(id):
     try:
         cursor = conexion.connection.cursor()
-        cursor.execute("SELECT * FROM cliente WHERE codigo = %s", (id,))
+        cursor.execute("SELECT * FROM cliente WHERE id = %s", (id,))
         datos = cursor.fetchone()
         if datos:
             cliente = {
@@ -88,7 +88,7 @@ def registrar_cliente():
 def eliminar_cliente(id):
     try:
         cursor = conexion.connection.cursor()
-        cursor.execute("DELETE FROM cliente WHERE codigo = %s", (id,))
+        cursor.execute("DELETE FROM cliente WHERE id = %s", (id,))
         conexion.connection.commit()
         cursor.close()
         return jsonify({'mensaje': "Cliente eliminado"})
@@ -102,7 +102,7 @@ def actualizar_cliente(id):
     try:
         cursor = conexion.connection.cursor()
         sql = """UPDATE cliente SET nombre=%s, apellido=%s, direccion=%s,
-                 telefono=%s, email=%s WHERE codigo=%s"""
+                 telefono=%s, email=%s WHERE id=%s"""
         valores = (
             request.json['nombre'],
             request.json['apellido'],
