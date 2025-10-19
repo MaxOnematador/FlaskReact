@@ -41,7 +41,7 @@ def listar_clientes():
 def leer_cliente(codigo):
     try:
         cursor = conexion.connection.cursor()
-        cursor.execute("SELECT * FROM cliente WHERE codigo = %s", (codigo,))
+        cursor.execute("SELECT * FROM cliente WHERE id = %s", (codigo,))
         datos = cursor.fetchone()
         if datos:
             cliente = {
@@ -81,11 +81,11 @@ def registrar_cliente():
 
 
 # Eliminar un cliente
-@app.route('/clientes/<codigo>', methods=['DELETE'])
+@app.route('/clientes/<id>', methods=['DELETE'])
 def eliminar_cliente(codigo):
     try:
         cursor = conexion.connection.cursor()
-        cursor.execute("DELETE FROM cliente WHERE codigo = %s", (codigo,))
+        cursor.execute("DELETE FROM cliente WHERE id = %s", (codigo,))
         conexion.connection.commit()
         return jsonify({'mensaje': "Cliente eliminado"})
     except Exception as ex:
@@ -93,12 +93,12 @@ def eliminar_cliente(codigo):
 
 
 # Actualizar un cliente
-@app.route('/clientes/<codigo>', methods=['PUT'])
-def actualizar_cliente(codigo):
+@app.route('/clientes/<id>', methods=['PUT'])
+def actualizar_cliente(id):
     try:
         cursor = conexion.connection.cursor()
         sql = """UPDATE cliente SET nombre=%s, apellido=%s, direccion=%s,
-                 telefono=%s, email=%s WHERE codigo=%s"""
+                 telefono=%s, email=%s WHERE id=%s"""
         valores = (
             request.json['nombre'],
             request.json['apellido'],
