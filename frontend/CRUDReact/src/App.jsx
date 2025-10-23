@@ -40,7 +40,7 @@ function App() {
           <Route path="/" element={<Navigate to="/clientes" />} />
           <Route path="/clientes" element={<ListaClientes />} />
           <Route path="/clientes/agregar" element={<AgregarCliente />} />
-          <Route path="/clientes/editar/:codigo" element={<EditarCliente />} />
+          <Route path="/clientes/editar/:id" element={<EditarCliente />} />
           <Route path="/productos" element={<ListaProductos />} />
           <Route path="/productos/agregar" element={<AgregarProducto />} />
           <Route path="/productos/editar/:id" element={<EditarProducto />} />

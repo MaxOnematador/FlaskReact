@@ -4,37 +4,37 @@ import api from '../services/api';
 
 function EditarCliente() {
     const navigate = useNavigate();
-    const { codigo } = useParams();
-    const [form, setForm] = useState({
-        nombre: '',
-        apellido: '',
-        direccion: '',
-        telefono: '',
-        email: ''
-    });
+    const { id } = useParams();
+    const [form, setForm] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const getCliente = async () => {
         try {
-            const res = await api.get(`/clientes/${codigo}`);
+            const res = await api.get(`/clientes/${id}`);
             setForm(res.data.cliente);
+            setLoading(false);
         } catch (error) {
             console.error(error);
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        getCliente();
-    }, [codigo]);
+        if (id) getCliente();
+    }, [id]);
 
     const updateCliente = async (e) => {
         e.preventDefault();
         try {
-            await api.put(`/clientes/${codigo}`, form);
+            await api.put(`/clientes/${id}`, form);
             navigate('/clientes');
         } catch (error) {
             console.error(error);
         }
     };
+
+    if (loading) return <div>Cargando cliente...</div>;
+    if (!form) return <div>Cliente no encontrado</div>;
 
     return (
         <div style={{ padding: '20px', maxWidth: '500px', margin: '0 auto' }}>
